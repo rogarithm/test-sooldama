@@ -14,6 +14,7 @@ public class SoolDamAApplication {
         System.out.println("again!");
         System.out.println("again?");
         System.out.println("again!");
+        System.out.println("again!");
         SpringApplication.run(SoolDamAApplication.class, args);
     }
 }
