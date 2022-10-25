@@ -1,23 +1,21 @@
-package com.flab.sooldama.domain.product.api;
+package com.flab.sooldama.domain.product.integration;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.flab.sooldama.domain.product.service.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(ProductApi.class)
-public class ProductApiTest {
-    @Autowired
-    MockMvc mockMvc;
+@SpringBootTest
+@AutoConfigureMockMvc
+public class ProductIntegrationTest {
 
-    @MockBean
-    ProductService productService;
+    @Autowired MockMvc mockMvc;
 
     @Test
     @DisplayName("제품 조회 성공 테스트")
@@ -33,5 +31,14 @@ public class ProductApiTest {
         this.mockMvc
                 .perform(get("/products?offset=-1"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("categoryId를 사용하여 categoryId에 알맞는 제품 조회 성공")
+    public void getProductsByCategoryIdTest() throws Exception {
+        this.mockMvc
+                .perform(get("/products?categoryId=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].productCategoryId").value(1));
     }
 }
