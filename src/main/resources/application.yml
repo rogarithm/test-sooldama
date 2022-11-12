@@ -1,4 +1,10 @@
 # mybatis
 
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;NON_KEYWORDS=USER
+    username: sa
+    password:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*Mapper.xml
